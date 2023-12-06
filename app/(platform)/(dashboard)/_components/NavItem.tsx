@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Activity, CreditCard, Layout, Settings } from "lucide-react";
 import Image from "next/image";
@@ -102,3 +103,14 @@ const NavItem = ({
 };
 
 export default NavItem;
+
+NavItem.Skeleton = function NavItemSkeleton() {
+  return (
+    <div className="flex items-center gap-x-2">
+      <div className="relative shrink-0 w-10 h-10">
+        <Skeleton className="w-full h-full absolute" />
+      </div>
+      <Skeleton className="h-10 w-full" />
+    </div>
+  );
+};
