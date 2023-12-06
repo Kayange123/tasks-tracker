@@ -7,6 +7,7 @@ import React from "react";
 const Navbar = () => {
   return (
     <nav className="fixed z-50 top-0 w-full px-2 md:px-4 border-b h-14 flex items-center shadow-sm bg-white">
+        
       <div className="flex items-center gap-x-4">
         <div className="hidden md:flex">
           <Logo />
