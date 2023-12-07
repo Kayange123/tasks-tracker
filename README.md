@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# `Taskier` - Tasks Management App
+
+This project involves producing Collaborative app for managing projects and reach new productivity peaks. From startups to home office, the way team works and how they organize tasks, these can all be accomplished with Taskier
 
 ## Getting Started
 
-First, run the development server:
+First, clone this project to your local environment
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repo link>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then, run the development server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+# then
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Lastly, Navigate to root folder, rename `.env.example` file to `.env` file and then fill in these lines
 
-## Learn More
+```js
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = enter_cleck_publishable_key;
+CLERK_SECRET_KEY = enter_your_cleck_secret_key;
+DATABASE_URL = "enter your mongodb connection link";
+```
 
-To learn more about Next.js, take a look at the following resources:
+This project uses [`clerk`](https://clerk.com) for authentication, authorization and organization management. Head over to their [`website`](https://clerk.com) to grab your keys and paste them to the `.env` file.
+
+## Additional grabs
+
+This project assumes the system with these minimum requirements
+
+```bash
+ typescript >= "^5"
+ node >= 18.16.4
+```
+
+## Technologies used
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- [Clerk Documentation](https://clerk.com) - To provide the authentication and authorization to website.
 
-## Deploy on Vercel
+- [Shadcn Documentation](https://shadcn.com) - For the styles of components and their interactivity.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [Prisma Documentation](https://prisma.io) - The project uses Object Relational Maper, Prisma.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Deployment
+
+The project has live demo deployed on [`Vercel Platform`](https://vercel.com) who are the creators of Next.js.
+
+Check out our live demo [`Taskier website`](https://taskier.vercel.app) for the visual design.
