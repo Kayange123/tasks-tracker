@@ -4,8 +4,6 @@ import BoardList from "./_components/BoardList";
 import { Suspense } from "react";
 
 const OrganizationPage = async () => {
-  //const boards = await db.board.findMany();
-
   return (
     <div className="w-full mb-20">
       <Info />

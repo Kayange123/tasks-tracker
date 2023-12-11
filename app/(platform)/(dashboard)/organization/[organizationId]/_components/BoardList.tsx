@@ -11,14 +11,19 @@ const BoardList = async () => {
   const { orgId } = auth();
   if (!orgId) redirect("/select-org");
 
-  const boards = await db.board.findMany({
-    where: {
-      orgId,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  let boards;
+  try {
+    boards = await db.board.findMany({
+      where: {
+        orgId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  } catch (error) {
+    //console.log(error);
+  }
 
   return (
     <div className="space-y-4">
@@ -63,7 +68,7 @@ const BoardList = async () => {
 
 BoardList.Skeleton = function BoardListSkeleton() {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       <Skeleton className="aspect-video w-full h-full p-2" />
       <Skeleton className="aspect-video w-full h-full p-2" />
       <Skeleton className="aspect-video w-full h-full p-2" />
