@@ -1,7 +1,7 @@
 import { ActionState } from "@/lib/createActions";
-import { UpdateBoard } from "./schema";
+import { CreateList } from "./schema";
 import { z } from "zod";
-import { Board } from "@prisma/client";
+import {  List } from "@prisma/client";
 
-export type InputType = z.infer<typeof UpdateBoard>;
-export type ReturnType = ActionState<InputType, Board>;
+export type InputType = z.infer<typeof CreateList>;
+export type ReturnType = ActionState<InputType, List>;

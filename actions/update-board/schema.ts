@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-export const UpdateBoard = z.object({
+export const CreateList = z.object({
   title: z
     .string({
       required_error: "Title is required",
       invalid_type_error: "Title is invalid",
     })
     .min(3, {
-      message: "The title should more than 3 characters long",
+      message: "Title should be more than 3 characters",
     }),
-    id: z.string(),
+  boardId: z.string(),
 });
