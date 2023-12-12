@@ -1,7 +1,8 @@
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs";
 import { notFound, redirect } from "next/navigation";
-import BoardNavbar from "./[boardId]/_components/BoardNavbar";
+import BoardNavbar from "./_components/BoardNavbar";
+import { Board } from "@prisma/client";
 
 export async function generateMetadata({
   params,
@@ -23,18 +24,20 @@ export async function generateMetadata({
 
 const BoardIdLayout = async ({
   children,
-  params,
+  params: { boardId },
 }: {
   children: React.ReactNode;
   params: { boardId: string };
 }) => {
   const { orgId } = auth();
   if (!orgId) redirect("/select-org");
-  let board;
+  if (!boardId) redirect(`/organization/${orgId}`);
+
+  let board: Board | null = null;
   try {
     board = await db.board.findUnique({
       where: {
-        id: params?.boardId,
+        id: boardId,
         orgId,
       },
     });
@@ -42,14 +45,16 @@ const BoardIdLayout = async ({
     // throw BoardIdPageError();
   }
 
-  if (!board) {
-    notFound();
-  }
+  setTimeout(() => {
+    if (!board) {
+      redirect(`/organization/${orgId}`);
+    }
+  }, 1000);
 
   return (
     <div
       className="relative h-full bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${board.imageFullUrl})` }}
+      style={{ backgroundImage: `url(${board?.imageFullUrl})` }}
     >
       <BoardNavbar board={board} />
       <div className="bg-black/10 absolute inset-0" />

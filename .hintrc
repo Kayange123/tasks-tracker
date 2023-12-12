@@ -8,6 +8,7 @@
       {
         "aria-command-name": "off"
       }
-    ]
+    ],
+    "no-inline-styles": "off"
   }
 }
