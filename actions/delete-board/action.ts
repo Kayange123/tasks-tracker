@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { InputType, ReturnType } from "./types";
+import { InputType } from "./types";
 import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { createActions } from "@/lib/createActions";
@@ -16,9 +16,9 @@ export const handler = async (data: InputType) => {
     };
   }
   const { id } = data;
-  let board;
+
   try {
-    board = await db.board.delete({
+    await db.board.delete({
       where: {
         id,
         orgId,
