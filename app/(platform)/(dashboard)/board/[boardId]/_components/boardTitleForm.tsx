@@ -1,6 +1,6 @@
 "use client";
 
-import { updateBoard } from "@/actions/update-board/action";
+import { createList } from "@/actions/update-board/action";
 import FormInput from "@/components/form/FormInput";
 import { Button } from "@/components/ui/button";
 import { useAction } from "@/hooks/useActions";
@@ -20,7 +20,7 @@ const BoardTitleForm = ({ title, id }: BoardTitleFormProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [formTitle, setFormTitle] = useState(title);
 
-  const { execute } = useAction(updateBoard, {
+  const { execute } = useAction(createList, {
     onSuccess(data) {
       toast.success(`Board "${title}" updated`);
       router.refresh();
@@ -54,17 +54,17 @@ const BoardTitleForm = ({ title, id }: BoardTitleFormProps) => {
   const onBlur = () => {
     formRef?.current?.requestSubmit();
   };
-return isEditing ? (
-      <form action={onSubmit} ref={formRef} className="flex items-center gap-x-2">
-        <FormInput
-          ref={inputRef}
-          className="text-lg font-bold px-[7px] py-1 h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent"
-          id="title"
-          onBlur={onBlur}
-          defaultValue={formTitle}
-        />
-      </form>
-    ) : (
+  return isEditing ? (
+    <form action={onSubmit} ref={formRef} className="flex items-center gap-x-2">
+      <FormInput
+        ref={inputRef}
+        className="text-lg font-bold px-[7px] py-1 h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent"
+        id="title"
+        onBlur={onBlur}
+        defaultValue={formTitle}
+      />
+    </form>
+  ) : (
     <Button
       onClick={enableEditing}
       variant="transparent"
