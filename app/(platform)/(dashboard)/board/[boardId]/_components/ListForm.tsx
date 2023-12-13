@@ -1,6 +1,5 @@
 "use client";
 import FormInput from "@/components/form/FormInput";
-import ListWrapper from "./ListWrapper";
 import { Button } from "@/components/ui/button";
 import { Plus, X } from "lucide-react";
 import { useState, ElementRef, useRef } from "react";
@@ -65,7 +64,7 @@ const ListForm = () => {
             ref={inputRef}
             id="title"
             placeholder="Enter list title"
-            className="text-sm px-2 py-1 h-7 font-medium border-transparent hover:border-input transition focus:border-input"
+            className="text-sm px-2 py-1 h-7 font-medium border-transparent hover:border-input transition ease-in focus:border-input"
           />
           <input type="text" hidden value={params?.boardId} name="boardId" />
           <div className="flex items-center justify-between gap-x-1">

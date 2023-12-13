@@ -1,6 +1,6 @@
 "use client";
 
-import { createList } from "@/actions/update-board/action";
+import { updateBoard } from "@/actions/create-list/action";
 import FormInput from "@/components/form/FormInput";
 import { Button } from "@/components/ui/button";
 import { useAction } from "@/hooks/useActions";
@@ -20,7 +20,7 @@ const BoardTitleForm = ({ title, id }: BoardTitleFormProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [formTitle, setFormTitle] = useState(title);
 
-  const { execute } = useAction(createList, {
+  const { execute } = useAction(updateBoard, {
     onSuccess(data) {
       toast.success(`Board "${title}" updated`);
       router.refresh();
@@ -40,10 +40,10 @@ const BoardTitleForm = ({ title, id }: BoardTitleFormProps) => {
   };
 
   const onSubmit = (formData: FormData) => {
-    const title = formData.get("title") as string;
+    const getTitle = formData.get("title") as string;
 
     execute({
-      title,
+      title: getTitle,
       id,
     });
   };
