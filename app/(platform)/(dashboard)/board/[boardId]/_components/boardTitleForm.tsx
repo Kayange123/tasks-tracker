@@ -1,6 +1,6 @@
 "use client";
 
-import { updateBoard } from "@/actions/create-list/action";
+import { updateBoard } from "@/actions/update-board/action";
 import FormInput from "@/components/form/FormInput";
 import { Button } from "@/components/ui/button";
 import { useAction } from "@/hooks/useActions";
@@ -24,7 +24,7 @@ const BoardTitleForm = ({ title, id }: BoardTitleFormProps) => {
     onSuccess(data) {
       toast.success(`Board "${title}" updated`);
       router.refresh();
-      setFormTitle(title);
+      setFormTitle(data?.title);
       disableEditing();
     },
     onError(error) {

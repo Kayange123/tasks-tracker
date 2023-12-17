@@ -1,4 +1,5 @@
 "use client";
+
 import FormInput from "@/components/form/FormInput";
 import { Button } from "@/components/ui/button";
 import { Plus, X } from "lucide-react";
@@ -7,7 +8,7 @@ import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import { useParams, useRouter } from "next/navigation";
 import FormSubmit from "@/components/form/FormSubmit";
 import { useAction } from "@/hooks/useActions";
-import { createList } from "@/actions/update-board/action";
+import { createList } from "@/actions/create-list/action";
 import toast from "react-hot-toast";
 
 const ListForm = () => {

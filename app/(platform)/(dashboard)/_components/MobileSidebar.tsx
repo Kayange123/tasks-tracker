@@ -31,7 +31,7 @@ const MobileSidebar = () => {
         size="sm"
         variant="ghost"
       >
-        <Menu className="h-4 w-4" />
+        <Menu className="h-6 w-6" />
       </Button>
       <Sheet open={isOpen} onOpenChange={onClose}>
         <SheetContent side="left" className="p-2 pt-10">
