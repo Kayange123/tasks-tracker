@@ -2,7 +2,7 @@
 
 import { unsplash } from "@/lib/unsplash";
 import { cn } from "@/lib/utils";
-import { Check, CheckCircle2Icon, Loader2 } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
