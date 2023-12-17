@@ -5,7 +5,7 @@ import { InputType, ReturnType } from "./types";
 import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { createActions } from "@/lib/createActions";
-import { CreateList } from "./schema";
+import { UpdateBoard } from "./schema";
 
 export const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -14,47 +14,26 @@ export const handler = async (data: InputType): Promise<ReturnType> => {
       error: "Unauthorized",
     };
   }
-  const { title, boardId } = data;
-  let list;
+  const { title, id } = data;
+  let board;
   try {
-    const board = await db.board.findUnique({
-      where: {
-        id: boardId,
-        orgId,
-      },
-    });
-    if (!board) {
-      return {
-        error: "Board Not Found",
-      };
-    }
-    const lastList = await db.list.findFirst({
-      where: {
-        boardId: board?.id,
-      },
-      select: {
-        order: true,
-      },
-      orderBy: {
-        order: "desc",
-      },
-    });
-    const newOrder = lastList ? lastList.order + 1 : 1;
-    list = await db.list.create({
+    board = await db.board.update({
       data: {
         title,
-        boardId,
-        order: newOrder,
+      },
+      where: {
+        id,
+        orgId,
       },
     });
   } catch (error) {
     return {
-      error: "Failed to create list",
+      error: "Failed to update",
     };
   }
 
-  revalidatePath(`/board/${boardId}`);
-  return { data: list };
+  revalidatePath(`/board/${id}`);
+  return { data: board };
 };
 
-export const createList = createActions(CreateList, handler);
+export const updateBoard = createActions(UpdateBoard, handler);

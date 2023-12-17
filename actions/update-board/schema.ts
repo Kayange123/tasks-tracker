@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const CreateList = z.object({
+export const UpdateBoard = z.object({
   title: z
     .string({
       required_error: "Title is required",
@@ -9,5 +9,5 @@ export const CreateList = z.object({
     .min(3, {
       message: "Title should be more than 3 characters",
     }),
-  boardId: z.string(),
+  id: z.string(),
 });
