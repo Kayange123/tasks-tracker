@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import ListItem from "./ListItem";
 
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { useAction } from "@/hooks/useActions";
+import { updateListOrder } from "@/actions/update-list-order/action";
+import toast from "react-hot-toast";
 
 interface ListContainerProps {
   boardId: string;
@@ -13,6 +16,14 @@ interface ListContainerProps {
 }
 const ListContainer = ({ boardId, list }: ListContainerProps) => {
   const [orderedList, setOrderedList] = useState(list);
+  const { execute: executeUpdateListOrder } = useAction(updateListOrder, {
+    onSuccess: () => {
+      toast.success("lists reordered");
+    },
+    onError(error) {
+      toast.error(error);
+    },
+  });
 
   useEffect(() => {
     setOrderedList(list);
@@ -42,6 +53,7 @@ const ListContainer = ({ boardId, list }: ListContainerProps) => {
       );
 
       setOrderedList(items);
+      executeUpdateListOrder({ items, boardId });
     }
 
     if (type === "card") {
@@ -77,9 +89,26 @@ const ListContainer = ({ boardId, list }: ListContainerProps) => {
 
         sourceList.cards = reorderedCards;
         setOrderedList(newOrderedData);
+      } else {
+        const [movedCard] = sourceList.cards.splice(source.index, 1);
+
+        //Assign new listId
+        movedCard.listId = destination.droppableId;
+
+        destinationList.cards.splice(destination.index, 0, movedCard);
+
+        sourceList.cards.forEach((card, index) => {
+          card.order = index;
+        });
+
+        destinationList.cards.forEach((card, index) => {
+          card.order = index;
+        });
+        setOrderedList(newOrderedData);
       }
     }
   };
+
   return (
     <div className="pt-24 w-full">
       <ListForm />
