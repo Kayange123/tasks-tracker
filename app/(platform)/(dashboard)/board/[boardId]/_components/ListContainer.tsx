@@ -65,11 +65,18 @@ const ListContainer = ({ boardId, list }: ListContainerProps) => {
       }
 
       if (source.droppableId === destination.droppableId) {
-        const reorderedItems = reorder(
+        const reorderedCards = reorder(
           sourceList.cards,
           source.index,
           destination.index
         );
+
+        reorderedCards.forEach((card, index) => {
+          card.order = index;
+        });
+
+        sourceList.cards = reorderedCards;
+        setOrderedList(newOrderedData);
       }
     }
   };
