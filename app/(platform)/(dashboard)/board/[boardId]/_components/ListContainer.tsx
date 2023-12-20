@@ -116,6 +116,10 @@ const ListContainer = ({ boardId, list }: ListContainerProps) => {
           card.order = index;
         });
         setOrderedList(newOrderedData);
+        executeUpdateCardOrder({
+          boardId,
+          items: destinationList.cards,
+        });
       }
     }
   };

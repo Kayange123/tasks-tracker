@@ -32,6 +32,7 @@ const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
       onSuccess(data) {
         toast.success(`card "${data?.title}" created`);
         formRef.current?.reset();
+        disableEditing();
       },
       onError(error) {
         toast.error(error);
@@ -92,7 +93,7 @@ const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
         <Button
           onClick={enableEditing}
           variant="ghost"
-          className="h-auto px-2 py-1.5 w-full justify-center text-white  text-sm"
+          className="h-auto px-2 py-1.5 w-full justify-center text-black  text-sm"
         >
           <Plus className="h-4 w-4 mr-2" />
           Add Card
