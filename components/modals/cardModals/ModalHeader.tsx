@@ -26,8 +26,12 @@ const ModalHeader = ({ data }: ModalHeaderProps) => {
       query.invalidateQueries({
         queryKey: ["card", data?.id],
       });
+      query.invalidateQueries({
+        queryKey: ["card-log", data?.id],
+      });
 
       toast.success(`Renamed to "${card?.title}"`);
+      setTitle(card?.title);
     },
   });
   const onBlur = () => {
