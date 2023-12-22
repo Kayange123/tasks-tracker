@@ -66,6 +66,7 @@ model AuditLog {
   action        ACTION
   entityId      String
   entityType    ENTITY_TYPE
+  entityTitle   String
   userId        String
   userImage     String @db.String
   userName      String @db.String
