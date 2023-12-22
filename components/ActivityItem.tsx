@@ -21,7 +21,7 @@ const ActivityItem = ({ log }: ActivityItemProps) => {
           {generateLogMessage(log)}
         </p>
         <p className="text-xs text-muted-foreground">
-          {format(new Date(log.createdAt), "MM dd, yyyy 'at' h:mm")}
+          {format(new Date(log.createdAt), "MMM dd, yyyy 'at' H:mm")}
         </p>
       </div>
     </li>
