@@ -38,12 +38,12 @@ model List {
 
 model Card {
   id            String   @id @default(cuid()) @map("_id")
-  title String
+  title         String
   order Int
-  description String?
+  description    String?
 
-  listId String
-  list List @relation(fields: [listId], references: [id], onDelete: Cascade)
+  listId        String
+  list          List @relation(fields: [listId], references: [id], onDelete: Cascade)
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -74,3 +74,12 @@ model AuditLog {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 } 
+
+model orgLimit {
+  id            String   @id @default(cuid()) @map("_id")
+  orgId         String @unique
+  count         Int @default(0)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
