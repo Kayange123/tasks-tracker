@@ -43,7 +43,7 @@ export const decrementAvailableCount = async () => {
   }
 };
 
-export const hasAvailableCount = async (): Promise<boolean> => {
+export const hasAvailableCount = async () => {
   const { orgId } = auth();
 
   if (!orgId) {
@@ -51,15 +51,6 @@ export const hasAvailableCount = async (): Promise<boolean> => {
   }
 
   const orgLimit = await db.orgLimit.findUnique({ where: { orgId } });
-
-  if (orgLimit) {
-    await db.orgLimit.update({
-      where: { orgId },
-      data: { count: orgLimit.count > 0 ? orgLimit.count - 1 : 0 },
-    });
-  } else {
-    await db.orgLimit.create({ data: { orgId, count: 1 } });
-  }
 
   if (!orgLimit || orgLimit.count < MAX_FREE_BOARDS) {
     return true;
