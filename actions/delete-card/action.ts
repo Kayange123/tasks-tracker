@@ -6,6 +6,8 @@ import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { createActions } from "@/lib/createActions";
 import { DeleteCard } from "./schema";
+import { createAuditLog } from "@/lib/createAuditLogs";
+import { ACTION, ENTITY_TYPE } from "@prisma/client";
 
 export const handler = async (data: InputType) => {
   const { userId, orgId } = auth();
@@ -26,6 +28,12 @@ export const handler = async (data: InputType) => {
           },
         },
       },
+    });
+    await createAuditLog({
+      entityTitle: card.title,
+      entityType: ENTITY_TYPE.CARD,
+      entityId: card.id,
+      action: ACTION.DELETE,
     });
   } catch (error) {
     //in case of error, return an error object and exit
