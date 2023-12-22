@@ -9,6 +9,7 @@ import { DeleteBoard } from "./schema";
 import { redirect } from "next/navigation";
 import { createAuditLog } from "@/lib/createAuditLogs";
 import { ACTION, ENTITY_TYPE } from "@prisma/client";
+import { decrementAvailableCount } from "@/lib/orgLimit";
 
 export const handler = async (data: InputType) => {
   const { userId, orgId } = auth();
@@ -26,7 +27,7 @@ export const handler = async (data: InputType) => {
         orgId,
       },
     });
-
+    await decrementAvailableCount();
     await createAuditLog({
       entityTitle: board.title,
       entityType: ENTITY_TYPE.BOARD,
