@@ -47,11 +47,14 @@ const BoardOptions = ({ id }: BoardOptionsProps) => {
         </PopoverClose>
         <Button
           onClick={onDelete}
+          disabled={isLoading}
           variant="ghost"
           className="rounded-none p-2 justify-start font-bold px-5 w-full h-auto flex space-x-2 items-center"
         >
           <Trash2 className="h-4 w-4 mr-2 text-red-600" />
-          <span className="text-sm text-red-700">Delete board</span>
+          <span className="text-sm text-red-700">
+            {isLoading ? "Deleting..." : "Delete Board"}
+          </span>
         </Button>
       </PopoverContent>
     </Popover>
