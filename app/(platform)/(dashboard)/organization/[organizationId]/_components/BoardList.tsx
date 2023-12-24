@@ -4,6 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { MAX_FREE_BOARDS } from "@/constants/boards";
 import { getAvailableCount } from "@/lib/orgLimit";
 import { db } from "@/lib/prisma";
+import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs/server";
 import { HelpCircle, User } from "lucide-react";
 import Link from "next/link";
@@ -28,6 +29,7 @@ const BoardList = async () => {
   }
 
   const availableCount = await getAvailableCount();
+  const isPro = await checkSubscription();
 
   return (
     <div className="space-y-4">
@@ -57,14 +59,18 @@ const BoardList = async () => {
           >
             <p className="text-sm text-muted-foreground">Create your board</p>
             <span className="text-xs">
-              {`${MAX_FREE_BOARDS - availableCount} remaining`}
+              {isPro
+                ? "Unlimited boards"
+                : `${MAX_FREE_BOARDS - availableCount} remaining`}
             </span>
-            <Hint
-              description={`Free workspaces can have atmost 5 boards, For unlimited boards upgrade this workspace`}
-              sideOffset={40}
-            >
-              <HelpCircle className="w-4 h-4 absolute bottom-2 right-2" />
-            </Hint>
+            {!isPro && (
+              <Hint
+                description={`Free workspaces can have atmost 5 boards, For unlimited boards upgrade this workspace`}
+                sideOffset={40}
+              >
+                <HelpCircle className="w-4 h-4 absolute bottom-2 right-2" />
+              </Hint>
+            )}
           </div>
         </FormPopover>
       </div>

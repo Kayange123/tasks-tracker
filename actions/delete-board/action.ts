@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 import { createAuditLog } from "@/lib/createAuditLogs";
 import { ACTION, ENTITY_TYPE } from "@prisma/client";
 import { decrementAvailableCount } from "@/lib/orgLimit";
+import { checkSubscription } from "@/lib/subscription";
 
 export const handler = async (data: InputType) => {
   const { userId, orgId } = auth();
@@ -21,13 +22,18 @@ export const handler = async (data: InputType) => {
   const { id } = data;
 
   try {
+    const isPro = await checkSubscription();
     const board = await db.board.delete({
       where: {
         id,
         orgId,
       },
     });
-    await decrementAvailableCount();
+
+    if (!isPro) {
+      await decrementAvailableCount();
+    }
+
     await createAuditLog({
       entityTitle: board.title,
       entityType: ENTITY_TYPE.BOARD,
