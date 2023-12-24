@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import FormPicker from "./form-picker";
 import { useRef, ElementRef } from "react";
 import { useRouter } from "next/navigation";
+import { useProModal } from "@/hooks/useProModal";
 
 interface FormPopoverProps {
   children: React.ReactNode;
@@ -31,6 +32,7 @@ const FormPopover = ({
   align,
 }: FormPopoverProps) => {
   const router = useRouter();
+  const proModal = useProModal();
   const closeRef = useRef<ElementRef<"button">>(null);
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
@@ -38,8 +40,11 @@ const FormPopover = ({
       closeRef.current?.click();
       router.push(`/board/${data?.id}`);
     },
-    onError: () => {
-      toast.error("Board creation failed");
+    onError: (error) => {
+      toast.error(error);
+      if (error.includes("upgrade")) {
+        proModal.onOpen();
+      }
     },
   });
   const onSubmit = (form: FormData) => {

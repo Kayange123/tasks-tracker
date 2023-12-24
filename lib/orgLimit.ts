@@ -67,15 +67,6 @@ export const getAvailableCount = async (): Promise<number> => {
 
   const orgLimit = await db.orgLimit.findUnique({ where: { orgId } });
 
-  if (orgLimit) {
-    await db.orgLimit.update({
-      where: { orgId },
-      data: { count: orgLimit.count > 0 ? orgLimit.count - 1 : 0 },
-    });
-  } else {
-    await db.orgLimit.create({ data: { orgId, count: 1 } });
-  }
-
   if (!orgLimit) {
     return 0;
   }

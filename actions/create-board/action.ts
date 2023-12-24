@@ -11,14 +11,13 @@ import { ACTION, ENTITY_TYPE } from "@prisma/client";
 
 export const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
+  const canCreateBoard = await hasAvailableCount();
 
   if (!userId || !orgId) {
     return {
       error: "User is not authenticated",
     };
   }
-
-  const canCreateBoard = await hasAvailableCount();
 
   if (!canCreateBoard) {
     return {
